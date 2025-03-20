@@ -1,0 +1,46 @@
+HOC - Higher Order Component.
+It is advanced technique in react to reuse component logic .it is a function.
+HOC is function that takes a component and returns a new component.
+Example:if we want to move from login page to homepage ,profile page or service pge we need user authentication.
+so in here we wrap user authentication in HOC.
+
+import React from 'react'
+import Hoc from './Hoc'
+const App = (props) => {
+  return (
+    <div>
+        <h1>Welcome User {props.name}</h1>
+    </div>
+  )
+}
+
+export default Hoc(App);
+
+import React from 'react'
+
+const Hoc = (Component) => {
+  return (
+    class extends React.Component{
+        state={
+            auth:true
+        }
+        render(){
+            return(
+                <div>
+                    {
+                        this.state.auth?<Component name='rohit'/>:<h1>Login Please</h1>
+                    }
+                </div>
+            )
+        }
+    }
+  )
+}
+
+export default Hoc;
+
+Note: In HOC we use class component inside function component to retuen a component
+
+
+
+

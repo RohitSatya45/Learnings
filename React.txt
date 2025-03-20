@@ -1,0 +1,372 @@
+React
+pre requisites
+1.we neeed to install node js 
+2.npm install create-react-app -to create realtime react-app
+3.npx create-react-app appname
+4.npm start -to start server.
+5.code. to open vscode.
+
+Chapter1: function and class Components.
+1.1.1-Example functionalcomponent in js.
+const Apping=()=>{
+  return(
+    <div>
+      <center>
+        <h3>Hellow ReactJs This is My first Component</h3>
+      </center>
+    </div>
+  )
+}
+export default Apping;
+
+
+example 1.1.2- for functional component using JSX.
+const Apping=()=>{
+  let name="rohit";
+  return(
+    <div>
+      <center>
+        <h3>Hellow ReactJs This is My first Component by {name} test</h3>
+      </center>
+    </div>
+  )
+}
+export default Apping; 
+//if here if we want inherit any js variable inside html we use{}as shown above for name.
+
+
+1.2.Class Component
+import React from "react";
+class App extends React.Component{
+  render(){
+    let name="rohitsatya";
+    return(
+      <div>
+        <center>
+          <h3>Hello first class component {name}</h3>
+        </center>
+      </div>
+    )
+  }
+}
+export default App;
+Note: we need to extend React.Component  to use class component and we have render method in class component.
+
+Chapter2: States & Props:
+states is like let we use to store a value in a component state can be passed to other component as well and we can 
+modify statees values in other components as well.
+2.1 States example and its usage in class.
+import React from "react";
+class App extends React.Component{
+state={
+  name:"Rohit Satya",
+  age:25
+}
+  render(){
+    return(
+      <div>
+        <center>
+          <h3>Name:{this.state.name} and age is{this.state.age}</h3>
+        </center>
+      </div>
+    )
+  }
+}
+export default App;
+
+2.2Props: the way of sendding data from one component to another component is know as props.
+2.2.1 calling one omponent in other example:
+App.js
+import React from "react";
+import Test from "./Test";
+class App extends React.Component{
+state={
+  name:"Rohit Satya",
+  age:25
+}
+  render(){
+    return(
+      <div>
+        <center>
+          <Test/>
+        </center>
+      </div>
+    )
+  }
+}
+export default App;
+
+Test.js
+import React from 'react';
+class Test extends React.Component{
+    render(){
+        return(
+            <div>
+                <center>
+                    <h1>Test Component</h1>
+                </center>
+            </div>
+        )
+    }
+    }
+    export default Test;
+
+2.2.2 : passing states value using props
+1.App.js
+import React from "react";
+import Test from "./Test";
+class App extends React.Component{
+state={
+  name:"Rohit Satya",
+  age:25
+}
+  render(){
+    return(
+      <div>
+        <center>
+          <Test name={this.state.name} age={this.state.age}/>
+        </center>
+      </div>
+    )
+  }
+}
+export default App;
+
+
+Test.js
+import React from 'react';
+class Test extends React.Component{
+    render(){
+        return(
+            <div>
+                <center>
+                    <h1>Test Component name:{this.props.name} and age:{this.props.age}</h1>
+                </center>
+            </div>
+        )
+    }
+    }
+    export default Test;
+
+
+NOte::::::shortcut for creating function cm=omonent rafce(react arrow function component).
+
+2.3.1 Using states in function components using hook concept.
+import React,{useState} from 'react'
+
+ const App = () => {
+  const [name,setName]=useState("Rohit");
+  return (
+    <div>
+      <center>
+        <h3>this is using state variable with hooks in function printing {name}</h3>
+      </center>
+    </div>
+  )
+}
+
+
+export default App;
+
+2.3.2 giving argument as object with normal and desctrucring
+import React,{useState} from 'react'
+
+ const App = () => {
+  const [data,setData]=useState({
+    name: "rohit",
+    age: 25
+  });
+  const {name,age}=data;//destructring
+  return (
+    <div>
+      <center>
+        <h3>this is using state variable with hooks in function printing {data.name} & {data.age}</h3>
+        <h3>this is using state variable with hooks in function printing {name} & {age}</h3> //with desctrucring
+      </center>
+    </div>
+  )
+}
+export default App;
+
+`
+2.4 Props
+import React,{useState} from 'react'
+import Test from './Test'
+
+ const App = () => {
+  const [data,setData]=useState({
+    name: "rohit",
+    age: 25
+  });
+  return (
+    <div>
+      <center>
+        <Test name={data.name} age={data.age}/>
+      </center>
+    </div>
+  )
+}
+export default App;
+
+import React from 'react'
+
+const Test = (props) => {
+  return (
+    <div>
+        <center>
+            <h1>Test function  Component name:{props.name} and age:{props.age}</h1>
+        </center>
+    </div>
+  )
+}
+export default Test;
+
+Note: Hooks are used in Function based components only. and mostly we use function based on components as it
+ has more functioanlities
+ 
+ 3.Evenet Handlers
+ 3.1 On CLick
+ 3.2 On change
+ 3.3 On Submit
+ 
+ 3.1 Example import React,{useState} from 'react'
+import Test from './Test'
+
+ const App = () => {
+  const [data,setData]=useState({
+    name: "rohit",
+    age: 25
+  });
+  return (
+    <div>
+      <center>
+        <button onClick={()=>alert("Hello")}>clickMe</button>
+      </center>
+    </div>
+  )
+}
+export default App;
+
+Note : we need to use arraow function for alert if we use directly withoiut af it will ececute immediately after page load.
+
+3.2 Example.import React,{useState} from 'react'
+import Test from './Test'
+
+ const App = () => {
+  const [name,setName]=useState('');
+  return (
+    <div>
+      <center>
+        Name={name}
+        <br/>
+        <input type="text name="name onChange={(e)=>setName(e.target.value)}/>
+      </center>
+    </div>
+  )
+}
+export default App;
+
+3.3 On submit (submitHAndler and changeHndler name can be what ever we want).---Form handling also covered as part of submit
+import React,{useState} from 'react'
+import Test from './Test'
+
+ const App = () => {
+  const[data,setData]=useState({
+    email:'',
+    password:''
+  })
+  const changeHandler=(e)=>{
+    setData({...data,[e.target.name]:e.target.value})
+  }
+  const submitHandler=(e)=>{
+    e.preventDefault()//it is used to restrict autload and erase of data on submit
+    console.log(data);
+  }
+  return (
+    <div>
+      <center>
+        <form onSubmit={submitHandler}>
+          <label>E-mail</label><br/>
+          <input type="email" name="email" onChange={changeHandler}/><br/>
+          <label>Password</label><br/>
+          <input type="password" name="password" onChange={changeHandler}/><br/>
+          <br/>
+          <input type="submit" value="Login"/>
+        </form>
+      </center>
+    </div>
+  )
+}
+export default App;
+
+
+4.form validation.
+  const submitHandler=(e)=>{
+    e.preventDefault()//it is used to restrict autload and erase of data on submit
+    if(data.password.length<5){
+      alert("Password must be greater than 5 characters")
+      
+    }else{
+      console.log(data);
+    }
+    
+  }
+  
+ 5.styling 
+ 5.1 csS inline: <label style={{'color':'blue', 'fontFamily':'Tahoma'}}>E-mail</label><br/> 
+ Note: we should have double {{ and styles should be wrapped in ''.
+ 5.1.2external css: create seperate file and import in specific components and use class names.
+ example ;import './App.css' and use it 
+ 
+ 5.2 bootstrap
+ same as normal adding cs and js path in html
+ <input type="submit" value="Login" className='btn btn-primary'/>
+ 
+ 
+ 6.Reusable Component
+ import React,{useState} from 'react'
+import Test from './Test'
+import './App.css'
+import Img from './Img'
+
+ const App = () => {
+  const arr=[
+    "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+    "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+    "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+  ]
+  
+  return (
+<div className='App'>
+  {arr.map((item,index)=><Img key={index} src={item} /> //if we use {} for map then no need to return statement
+  )
+ }
+
+</div>
+  )
+}
+export default App;
+
+import React from 'react'
+
+const Img = (props) => {
+  return (
+    <div style={{display:'inline'}}>
+        <img src={props.src} height={150} width={150}/>
+    </div>
+  )
+}
+
+export default Img
+ 
+
+
+
+
+
+
+
+
+
+
+

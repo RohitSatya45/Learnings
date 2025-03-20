@@ -1,0 +1,193 @@
+React Router
+1. To create multipage react application.
+Command to install react router dam package= npm i react-router-dom@latest
+
+1.for MPA we need to write below codes to navigate and get paths.
+import React from 'react'
+import Home from './Home'
+import About from './About'
+import Dashboard from './Dashboard'
+import {BrowserRouter, Routes,Route} from 'react-router-dom'
+const App = () => {
+  return (
+    <div>
+      <center>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path='/dashboard' element={<Dashboard/>}/>
+            <Route path='/about' element={<About/>}/>
+          </Routes>
+        </BrowserRouter>
+      </center>
+    </div>
+  )
+}
+
+export default App
+
+2.import React from 'react'
+import {Link} from 'react-router-dom'
+import './index.css'
+
+const Home = () => {
+  return (
+    <div>
+        <center>
+            <Link to='/about' className="link">About US</Link> {" "}
+            <Link to='/dashboard' className="link">Dashboard</Link> <br/> <br/>
+            Welcom to Home Page</center>
+    </div>
+  )
+}
+
+export default Home
+
+
+3.import React from 'react'
+import {Link} from 'react-router-dom'
+import './index.css'
+
+const Dashboard = () => {
+  return (
+    <div>
+        <center>
+        <Link to='/' className="link">Home</Link> <br/>
+        Welcome to Dashboard Page.</center>
+    </div>
+  )
+}
+
+export default Dashboard
+
+4.import React from 'react'
+import {Link} from 'react-router-dom'
+import './index.css'
+
+const About = () => {
+  return (
+    <div>
+        <center>
+        <Link to='/' className="link">Home</Link> <br/>
+            We are in Aboutus Page.</center>
+    </div>
+  )
+}
+
+export default About
+
+Note: observe elememt to route and {" "} usage for space
+
+2.URL Paramaters
+1.Path params
+2.Query Params.
+code:
+import React from 'react'
+import Home from './Home'
+import About from './About'
+import Dashboard from './Dashboard'
+import {BrowserRouter, Routes,Route} from 'react-router-dom'
+const App = () => {
+  return (
+    <div>
+      <center>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path='/dashboard/:name' element={<Dashboard/>}/>
+            <Route path='/about' element={<About/>}/>
+          </Routes>
+        </BrowserRouter>
+      </center>
+    </div>
+  )
+}
+
+export default App
+
+import React from 'react'
+import {Link} from 'react-router-dom'
+import './index.css'
+
+const Home = () => {
+    const user='jhon';
+  return (
+    <div>
+        <center>
+            <Link to='/about' className="link">About US</Link> {" "}
+            <Link to={`/dashboard/${user}`} className="link">Dashboard</Link> <br/> <br/>
+            Welcom to Home Page.
+            </center>
+    </div>
+  )
+}
+
+export default Home
+Note :check link of dashboard in home.
+
+Now how to use parameter pass to dashboard component
+import React from 'react'
+import {Link} from 'react-router-dom'
+import './index.css'
+import {useParams} from'react-router-dom'
+
+const Dashboard = () => {
+    let params=useParams();
+  return (
+    <div>
+        <center>
+        <Link to='/' className="link">Home</Link> <br/>
+        <p>Name={params.name}</p>
+        Welcome to Dashboard Page.</center>
+    </div>
+  )
+}
+
+export default Dashboard
+
+Quearyparams
+import React from 'react'
+import {Link} from 'react-router-dom'
+import './index.css'
+
+const Home = () => {
+    const user='jhon';
+  return (
+    <div>
+        <center>
+            <Link to={`/about?name=${user}&age=${26}`} className="link">About US</Link> {" "}
+            <Link to={`/dashboard/${user}`} className="link">Dashboard</Link> <br/> <br/>
+            Welcom to Home Page.
+            </center>
+    </div>
+  )
+}
+
+export default Home
+
+import React from 'react'
+import {Link} from 'react-router-dom'
+import './index.css'
+import {useLocation} from'react-router-dom'
+
+const About = () => {
+    let {search}=useLocation();
+    let params=new URLSearchParams(search);
+    console.log(search);
+  return (
+    <div>
+        <center>
+        <Link to='/' className="link">Home</Link> <br/>
+        <p>Name={params.get('name')}</p>
+        <p>age={params.get('age')}</p>
+            We are in Aboutus Page.</center>
+    </div>
+  )
+}
+
+export default About
+
+Note :no changes in app.js for above example.
+
+**Default Router
+

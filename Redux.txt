@@ -1,0 +1,21 @@
+React-Redux
+Open Source Java script Library for managing application state values
+
+Need to install
+1.npm install redux
+2.npm install react-redux
+3.npm install redux-thunk
+4.npm install redux-devtool-extension
+
+1.Redux we have four different components.
+1.React component(normal).
+2.Store component - where all the state values are stored.
+3.Reducer Component - throught reducer we interact with store and  access state values in our react component.
+4.Action Creators -through wich we modify state values. it will create action and dispatches to the reducer with 
+help of redux-thunk.
+
+
+
+
+
+
