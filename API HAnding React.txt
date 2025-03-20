@@ -1,0 +1,63 @@
+API Handlig in React
+If we want to perfrom any operation immediately after rendering the component -we use useEffecTHook
+we use useEffect Hook only to call api in react.
+
+1. Get data from API
+import React,{useEffect,useState} from 'react'
+
+const App = () => {
+  const[data,setData]=useState([]);
+  useEffect(()=>{
+    fetch('https://catfact.ninja/facts').then(
+    response=>response.json()).then(json=>setData(json.data));
+  },[])
+  return (
+    <div>
+      {data.map((item,index)=><p key={index}>{item.fact}</p>)}
+    </div>
+  )
+}
+
+export default App
+Note: if we are using {} inside aroow functio form example then we need to retun or else we can ignore return.
+
+
+2.Post Data in to FirebasedB
+import React,{useState} from 'react'
+
+const App = () => {
+  let[data,setData]=useState({
+    email:"",
+    password:""
+  })  
+  const changeHandler=(e)=>{
+    setData({...data,[e.target.name]:e.target.value})
+  }
+  const submitHandler=(e)=>{
+    e.preventDefault();
+    console.log(data);
+    fetch("https://formdetails-api-default-rtdb.firebaseio.com/data.json",
+      {
+        method:"POST",
+        headers:{
+          'content-type':'application/json'
+        },
+        body:JSON.stringify(data)
+      }
+    ).then(res=>console.log("data posted")).catch(err=>console.log(err))
+  }
+  return (
+    <div>
+      <form onSubmit={submitHandler}>
+        <label>Email</label><br/>
+        <input type="text" name="email" onChange={changeHandler}/><br/>
+        <label>Password</label><br/>
+        <input type="text" name="password" onChange={changeHandler}/><br/>
+        <input type="submit" value="Submit"/>
+      </form>
+    </div>
+  )
+}
+
+export default App
+

@@ -1,0 +1,149 @@
+ontext API is a feature in js used to share data with multiple components
+Example.
+ 
+without passing data through props manually.
+import React,{useState, createContext} from 'react'
+import ComponentA from './ComponentA'
+import ComponentB from './ComponentB'
+export const store=createContext();
+const App = () => {
+  const [value,setValue]=useState(0);
+  return (
+    <store.Provider value={[value,setValue]}>
+    <div>
+      <center>
+        <ComponentA/>
+        <ComponentB/>
+        <button onClick={()=>{setValue(value+1)}}>Increment</button>
+      </center>
+    </div> 
+    </store.Provider>
+  )
+}
+
+export default App
+
+import React,{useContext} from 'react'
+import {store} from './App'
+
+const ComponentA = () => {
+    const [value,setVlue]=useContext(store);
+  return (
+    <div>
+        <center>
+        <h2>ComponentA {value}</h2>
+        </center>
+    </div>
+  )
+}
+
+export default ComponentA
+
+import React,{useContext} from 'react'
+import {store} from './App'
+
+const ComponentB = () => {
+    const [value,setValue]=useContext(store);
+  return (
+    <div>
+        <center>
+        <h2>ComponentB {value}</h2>    
+        </center>
+    </div>
+  )
+}
+
+export default ComponentB
+
+RealTime Example.
+count component :TO dshow count of items aded in cart
+Display Component : To DIsplay Items added in cart.
+
+import React,{useState, createContext} from 'react'
+import Count from './Count'
+import Display from './Display'
+import "bootstrap/dist/css/bootstrap.min.css";
+export const store=createContext();
+const App = () => {
+  const [data,setData]=useState([
+    {
+      brandname:'Realme',
+      model:'Realme 7',
+      price:14999
+    },
+    {
+      brandname:'Samsung',
+      model:'Galaxy M31',
+      price:17499
+    }
+  ]);
+  return (
+    <store.Provider value={[data,setData]}>
+    <div>
+      <center>
+        <Count/>
+        <Display
+        />
+      </center>
+    </div> 
+    </store.Provider>
+  )
+}
+
+export default App
+
+import React,{useContext} from 'react'
+import {store} from './App'
+
+const Count = () => {
+    const [data,setData]=useContext(store);
+  return (
+    <div className='card'>
+        <div className='card-body'>
+            <h3 className='card-title'>count :{data.length}</h3>
+        </div>
+    </div>
+  )
+}
+
+export default Count
+
+import React,{useContext,useState} from 'react'
+import {store} from './App'
+
+const Display = () => {
+    const [data,setData]=useContext(store);
+    const [details,setDetails]=useState({
+        brandname:'',
+        model:'',
+        price:''
+    });
+    const changehandler=(e)=>{
+        setDetails({...details,[e.target.name]:e.target.value})
+    }
+    const submithandler=(e)=>{
+        e.preventDefault();
+        setData([...data,details]);
+    }
+  return (
+<div className='card'>
+        <div className='card-body'>
+            {data.map((item)=>
+            <div>
+                <h3 className='card-title'>{item.brandname}</h3>
+                <h3 className='card-title'>{item.model}</h3>
+                <h3 className='card-title'>{item.price}</h3>
+                </div>
+            )}
+            <form className="form" onSubmit={submithandler}>
+                <input type="text" placeholder="brandname" name="brandname" onChange={changehandler}required/>
+                <input type="text" placeholder="model" name="model" onChange={changehandler} required/>
+                <input type="number" placeholder="price" name="price" onChange={changehandler} required/>
+                <input type="submit" value="Add"/>
+            </form>
+        </div>
+    </div>
+  )
+}
+
+export default Display
