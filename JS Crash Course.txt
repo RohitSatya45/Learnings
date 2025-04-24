@@ -1,0 +1,322 @@
+JS Crash Course:
+call back:call back is a function passed as an argument to another function.
+
+setTimeout:
+1.function hello(){
+    console.log("Hello");
+}
+setTimeout(hello,5000);
+2.setTimeout(()=>{
+    console.log("Hello World");
+},5000);
+
+
+setTimeout Execution
+console.log(1);
+console.log(2);
+console.log(3);
+function rohit(){
+  console.log("test function");
+}
+setTimeout(rohit,5000);
+setTimeout(()=>console.log("arrow function"),10000);
+console.log(4);
+console.log(5);
+
+
+Callbacks is basically  passing function as an argument to other function
+
+1,2. are synchronus type of execution of callbacks.
+3. is asynchronus type of execution.
+
+
+1.
+function sum(a, b) {
+  console.log(a + b);
+}
+function calculator(a, b, sumcallback) {
+  sumcallback(a, b);
+}
+calculator(1, 2, sum);
+
+2.calculator(1, 2, (a, b) => console.log(a + b)); //for this sum function is not required
+
+3.function hello(){
+    console.log("Hello");
+}
+setTimeout(hello,5000);
+
+
+Call back Hell.
+function getData(dataId, getNextData) {
+  setTimeout(() => {
+    console.log('data', dataId);
+    if (getNextData) {
+      getNextData();
+    }
+  }, 5000);
+}
+getData(1, () => {
+  console.log('getting data 2...');
+  getData(2, () => {
+    console.log('getting data 3...');
+    getData(3, () => {
+      console.log('getting data 4...');
+      getData(4);
+    });
+  });
+});
+
+using arrow functionconst getData=(dataId,getNextData)=>{
+    setTimeout(()=>{
+        console.log("dataid", dataId)
+        if(getNextData){
+            getNextData();
+        }
+    },5000);
+}
+console.log("data1 is printing");
+getData(3000,()=>{
+    console.log("data2 is printing");
+    getData(5000,()=>{
+        console.log("data3 is printing");
+        getData(4000)
+    })
+});
+
+
+**Promise:promises are eventual eecution of tasks
+ promise in a object in js which has three states pending,fullfilled and reject.
+ resolve reject are callbacks provided by js.
+ 
+
+so basically we wont create promises if we send request to apis it will send back result as promises we deal with apis
+to extract data.
+
+let promise = new Promise((resolve, reject)==resolve,reject are callbacks created by js it self
+
+Promise General Example.
+let promise=new Promise((resolve,reject)=>{
+    console.log("promise");
+    resolve("promise resolved")
+})
+
+Promise in function
+function getData(dataId,getNextData){ 
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{console.log("Data",dataId);
+            resolve("issue is resolved");
+        },5000)
+    })  
+}
+
+
+Try and catch usage(Synchronus Function)
+
+const data=()=>{
+    return new Promise((resolve,reject)=>{
+        console.log("test promise");
+        //resolve("promise resolved");
+        reject("promise rejected");
+    })
+}
+
+let dataone=data();
+dataone.then((res)=>{
+    console.log("execution after promise resolved",res);
+});
+
+dataone.catch((err)=>{
+    console.log("execution after promise rejected",err);
+});
+
+
+
+**Promises Async  code:
+function aysnc(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            console.log("some data1")
+            resolve('Hello World')
+        },5000)
+    })
+}
+console.log("fecting data1");
+let afun=aysnc();
+afun.then((res)=>{
+    console.log(res);
+})
+
+***Promise multiple async functions.
+1.Without promise chaining
+function aysnc(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            console.log("some data1")
+            resolve('Hello World')
+        },5000)
+    })
+}
+
+function aysnc2(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            console.log("some data2")
+            resolve('Hello World2')
+        },4000)
+    })
+}
+
+console.log("fecting data1");
+let afun=aysnc();
+afun.then((res)=>{
+    console.log(res);
+})
+
+console.log("fecting data2");
+let afun2=aysnc2();
+afun2.then((res)=>{
+    console.log(res);
+})
+
+2.With promise chaining one after other
+console.log("Fetching data1...");
+let p1=asyncFunction1();
+p1.then((res)=>{
+  console.log(res);
+console.log("Fetching data2...");
+let p2=asyncFunction2();
+p2.then((res)=>{console.log(res)
+});
+});   
+
+//we can also replace p1 directly to async1.--it is just adding one inside other
+console.log("fecting data1");
+aysnc().then((res)=>{
+    console.log(res);
+    console.log("fecting data2");
+aysnc2().then((res)=>{
+    console.log(res);
+})
+})
+
+
+callback  hell using promise chain.
+function getData(dataId,getNextData){ 
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{console.log("Data",dataId);
+            resolve("issue is resolved");
+        },5000)
+    })  
+}
+
+getData(1).then((res)=>{
+    console.log(res);
+    getData(2).then((res)=>{
+        console.log(res);
+        
+    })
+
+})
+
+
+//alternate for promise chaining for call back hell below syntax :
+**promise chaining
+function getData(dataId) {
+  return new Promise((resolve,reject)=>{
+  setTimeout(() => {
+    console.log('data', dataId);
+    resolve("success");
+  }, 3000);
+});
+}
+getData(1).then((res)=>{
+return getData(2);
+}).then((res)=>{
+  return getData(3);
+}).then(res=>{
+  console.log(res)
+  })
+  
+  
+****Async function will return a promise.
+we need to add async before function to make it async.
+
+async await(basic code)
+function api(){
+  return new Promise((resolve,reject)=>{
+    setTimeout(()=>{
+      console.log("Weather data");
+      resolve(2000);
+    },2000);
+  });
+}
+
+async function getWeatherData() {
+  await api();
+  await api();
+}
+
+
+ ***Our Example with async function:
+ function getData(dataId) {
+  return new Promise((resolve,reject)=>{
+  setTimeout(() => {
+    console.log('data', dataId);
+    resolve("success");
+  }, 3000);
+});
+}
+
+async function getAllData() {
+  await getData(1);
+  await getData(2);
+  await getData(3);
+}
+getAllData();
+
+
+//in the above example we are unnecissarly invoking async function so we can use 
+IIFE : Imeddiately invoked  function Expression.
+USing IIFE.
+
+(async function() {
+    await getData(1);
+    await getData(2);
+    await getData(3);
+  })();
+
+
+APIS:
+fetch(URL, oprions): url ==end pont if no option is give it is bydefault get.
+featch is asynchronus method so that we use async and await.
+**AJAX:getting response from api using api call is known as ajax==Asyncronus js & XML currently it is AJAJ =json(but
+we still use ajax).for our understanding.
+**we get response in json form and we need to transform that to java script object.
+json method is used for that and it is also asynchronus.
+
+
+Error types:
+200 -success
+400-if api not esites
+500-if errr from api end.
+
+const URL ="https://dogapi.dog/api/v2/breeds";
+//async await 
+/*const getFacts= async ()=>{
+    console.log("Getting data....");
+    let response = await fetch(URL);
+    console.log(response);
+    let data= await response.json();
+    console.log(data.data[0].attributes.name);
+}*/
+
+//Using Promise
+function promises(){
+    fetch(URL).then((response)=>{
+        return response.json();
+    }).then((data)=>{
+        console.log(data); 
+    })
+}
+
