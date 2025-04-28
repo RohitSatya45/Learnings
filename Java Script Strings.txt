@@ -1,0 +1,208 @@
+String can be double quote or single quote//both are fine.
+
+let text = `He's often called "Johnny"`;//these are template strings we can use '' and "" inside them.(internet explorer wont support them).
+
+to find length of string a.length.
+
+we can use "" inside string "" by using backspace 
+for('')--\'\' same for "" and \
+
+Note: For readability, programmers often like to avoid long code lines.
+Example 1: 
+document.getElementById("demo").innerHTML =
+"Hello Dolly!";
+
+Example 2:
+document.getElementById("demo").innerHTML = "Hello " +
+"Dolly!";
+
+Example 3 for emplate string :
+let text =
+`The quick
+brown fox
+jumps over
+the lazy dog`;
+
+Note:typeof x  give type value of x.
+let x = "John"; -- for this output is string
+let y = new String("John"); -- for this output is object.
+
+note Difference between == and ===
+example 1 : for ==
+console.log(5 == "5"); // true
+console.log(null == undefined); // true
+console.log(0 == false); // true
+
+Example 2: for ===
+console.log(5 === "5"); // false
+console.log(null === undefined); // false
+console.log(0 === false); // false
+
+Key Differences:
+Type Coercion: == converts different types to a common type, while === does not.
+
+Strictness: === is stricter because it checks both value and type, leading to fewer unexpected results.
+
+1. String Methods. (for getting character).
+lext a="abc";  output
+x.legth;        3     
+x.charAt(0);    a
+x.charCodeAt(o) 65
+x.at[0];        a//new version oc charAt all new browsers support this.(only difference is it also takes negative indexes as example shown below).
+eample:
+myString.at(-2) b
+charAt(myString.length-2)    b
+x[0]             a//this also works as charAt and at but have many negatives.
+
+2. String Methods(for Substring).
+slice(start, end)
+substring(start, end)
+substr(start, length)
+
+slice(start, end) //end position not included.
+Example : let text = "Apple, Banana, Kiwi";                                     Output 
+Example 1: text.slice(7, 13); // it displays all characters from 7 to 12.       Banana, Kiwi
+Example 2: text.slice(7);//it display everything starting from 7                Banana
+Example 3 : let part = text.slice(-12);// counts from end  If a parameter is negative, 
+the position is counted from the end of the string   (starts from -1)                          Banana, Kiwi
+Example 4 : let part = text.slice(-12,-6)                                       Banana
+ex4 is tricky refer this https://www.w3schools.com/js/tryit.asp?filename=tryjs_string_slice_negative
+
+2.1 substring()// same as slice but no negative values arre taken.
+
+2.2substr()
+str.substr(7,6)                                                                str.substr(7,6)
+note:if we length is not specified it will take rest of the string. example below.
+str.substr(7);                                                                 Banana, Kiwi
+str.substr(-4)                                                                 Kiwi
+
+Note: for string no c=lowercamel case followed.
+
+3. toUpperCase();
+3.1 toLowerCase();
+
+4.concat
+example 1:
+let text1 = "Hello";
+let text2 = "World";
+let text3 = text1.concat(" ", text2);
+example 2: text = "Hello".concat(" ", "World!");
+example 3: text = "Hello" + " " + "World!";
+
+5.trim().
+let text1 = "     Hello World!     ";
+text1.trim();  = "Hello World!";
+text1.trimStart();=  "Hello World!     ";(it removes only starting empty spaces
+text1.trimEnd(); = "     Hello World!";(it removes only empty places at the end).
+
+6.padStart().
+example 1: 
+let text = "5";
+document.getElementById("demo").innerHTML = text.padStart(4,"x"); //output :xxx5.
+
+example2 : let text = "5445";
+text = text.padStart(8,"09143"); //8 stands for length of new String and 09143 new input added to string infront to get 8 length string
+output: 09145445
+
+
+6.1 padEnd();
+let text = "5";
+text = text.padEnd(4,"0"); //output :5000 
+
+!!!but one thing if size is less it will adjust new string if given size is more than our original itself then it will not
+remove some part to get 4 digits example below.
+Example:
+
+let text = "54321";
+text = text.padEnd(4,"0"); //output: 54321
+
+note:example 2 is same take only some part required.
+
+!!!as padStart and padEnd are string methods if we want pad a number we need to covert t to string first.
+Exampe: let numb = 5;
+let text = numb.toString();
+
+7.string.repeat(count)
+Example:
+let result = text.repeat(2); //output: Hello world!Hello world!
+
+8: let text = "Please visit Microsoft!";
+let newText = text.replace("Microsoft", "W3Schools");  output: Please visit W3Schools! //it is case sensitive.
+
+8.1 : let newText = text.replace(/MICROSOFT/i, "W3Schools");  to replace case sensitive
+8.2 : let newText = text.replace(/Microsoft/g, "W3Schools"); //to replace multiple instances.
+
+!!!!!!!!!!!!!!!note:
+String : "apple" (this can be used with replace and replace all).
+regular expression :/apple/i (this can be only used with replace.
+regular expression with global flag : /apple/g  (this can be used with both replace replace and replace all
+
+9.replaceAll()
+Example: text = text.replaceAll("Cats","Dogs");//replaces all occurences
+Example 2: text = text.replaceAll(/cats/g,"dogs");
+
+10.split()
+
+example:
+let text = "Please locate where 'locate' occurs!";
+11.indexOf("locate");gives starting index of given word.  output :7
+12.lastIndexOf("locate");so it gives starting index of last locate. output:21
+both willl give -1 if word not found. 
+
+Both methods accept a second parameter as the starting position for the search:(13th and 14th)
+13.let text = "Please locate where 'locate' occurs!";
+let index = text.indexOf("locate",15);   output 21   (in here 15 is starting index).
+
+14:let text = "Please locate where 'locate' occurs!";
+let index = text.lastIndexOf("locate", 15); //output:7 (in here 15 is ending index).
+14 example 2:
+let text = "Please locate locate where 'locate' occurs!";
+let index = text.lastIndexOf("locate", 15);   //output :14 
+
+search() gives starting index of irst search.
+15:let text = "Please locate where 'locate' occurs!";
+text.search("locate");                                 //output:7
+15.1 let text = "Please locate where 'locate' occurs!";
+text.search(/locate/);                                  //output:7
+
+!!!!!!!!!!!!!!!!!!Note: The two methods, indexOf() and search(), are equal?
+
+They accept the same arguments (parameters), and return the same value?
+
+The two methods are NOT equal. These are the differences:
+
+The search() method cannot take a second start position argument.
+The indexOf() method cannot take powerful search values (regular expressions).
+
+16 match() returns count and match text as well. we can use same as replace().
+example : let text = "The rain in SPAIN stays mainly in the plain"; 
+const myArr = text.match(/ain/gi);
+output : 4 ain,AIN,ain,ain
+
+17 matchAll()
+
+18 variable interopator
+<script>
+let firstName = "John";
+let lastName = "Doe";
+
+let text = `Welcome ${firstName}, ${lastName}!`; output: Welcome John, Doe!
+ example 2: <script>
+let price = 10;
+let VAT = 0.25;
+let total = `Total: ${(price * (1 + VAT)).toFixed(2)}`;  output: Total: 12.50
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

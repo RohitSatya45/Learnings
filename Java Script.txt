@@ -1,0 +1,559 @@
+Java Script
+
+1.Changing HTMl Content
+Example: <button type="button" onclick='document.getElementById("demo").innerHTML = "Hello JavaScript!"'>Click Me!</button>
+
+Note1: if we want to see change on button itself.
+<button onclick="this.innerHTML = Date()">The time is?</button>  //for date funcrion we don't use '' or ""
+
+Note 2: see in here also for text we don't use "" or '' as value stored in init.
+<script>
+let text = "John Doe";  // String written inside quotes
+document.getElementById("demo").innerHTML = text;   //for document in script tag we don't use '' or "".
+</script>
+
+2.Changing HTML Attribute Value.
+ sample for adding styleand attributein HTML
+<img id="myImage" src="pic_bulboff.gif" style="width:100px">
+Example: <button onclick="document.getElementById('myImage').src='pic_bulbon.gif'">Turn on the light</button>
+
+3.Changing CSS.
+Example : <button type="button" onclick="document.getElementById('demo').style.fontSize='35px'">Click Me!</button>
+
+4.Showing hidden HTML elements can also be done by changing the display style
+Example: <p id="demo" style="display:none">Hello JavaScript!</p>
+<button type="button" onclick="document.getElementById('demo').style.display='block'">Click Me!</button> // in here we cannot change = to : for style.
+
+
+Java script used inside script tag
+Example : <script>
+document.getElementById("demo").innerHTML = "My First JavaScript";
+</script>
+
+Note: for Old jS  example we use tpe="text/java script".
+
+We can store js inside a function and we can call it any where.
+Example:
+<head>
+<script>
+function myFunction() {
+  document.getElementById("demo").innerHTML = "Paragraph changed.";
+}
+</script>
+</head>
+<body>
+
+<h2>Demo JavaScript in Head</h2>
+
+<p id="demo">A Paragraph.</p>
+
+<button type="button" onclick="myFunction()">Try it</button>
+
+</body>
+
+we can have multiple logics things inside a function
+Example:
+
+<button type="button" onclick="myFunction()">Click Me!</button>
+
+<p id="demo1"></p>
+<p id="demo2"></p>
+
+<script>
+function myFunction() {
+  document.getElementById("demo1").innerHTML = "Hello Dolly!";
+  document.getElementById("demo2").innerHTML = "How are you?";
+}
+</script>
+
+//js can can be anywhere at last as well (prefered).if we have function we need to call or else it auto executes.
+
+
+//in the same way as above we can store script in body and call it in header.
+//we can also store functions in other js files and call it in our file.
+Example 1: <script src="myScript.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function myFunction() {
+  document.getElementById("demo").innerHTML = "Paragraph changed.";
+}
+</script>
+</head>
+<body>
+
+<h2>Demo JavaScript in Head</h2>
+
+<p id="demo">A Paragraph.</p>
+
+<button type="button" onclick=Date()>Try it</button>
+
+</body>
+</html> 
+
+Example 2 : <script src="myScript1.js"></script>
+<script src="myScript2.js"></script>
+
+Example 3: <script src="https://www.w3schools.com/js/myScript.js"></script> //full url
+
+Example 4: <script src="/js/myScript.js"></script> // file path.
+
+
+Uses of external FIles:
+It separates HTML and code
+It makes HTML and JavaScript easier to read and maintain
+Cached JavaScript files can speed up page loads
+
+
+****some commands
+console.log(5+6);
+window.alert(5+6)/alert(5+6).//as window is global scope object.
+window.print().//to print current page.
+
+in js we use ; to seperate statemnts.
+Example1 :
+let a, b, c;  
+a = 5;       
+b = 6;       
+c = a + b;
+
+Example 2:
+a = 5; b = 6; c = a + b;
+
+Example 3:
+let person = "John Doe", carName = "Volvo", price = 200;
+
+Example 4:
+let person = "John Doe",
+carName = "Volvo",
+price = 200;
+
+Note::in java script it is better to keep space around operators.
+Example : let x = y + z;
+
+
+Comments in JS // or/* */
+
+Note: A varialbe name in java script can star with aplphabets/$/_(Numbers are not allowed).
+JS is case sensitive
+We cannot use - in js as it is reserved for subraction.
+Lower camel case is mostly prefered.
+
+***Declaring variables(var,let,const)
+var - The var keyword should only be used in code written for older browsers.
+let - The value of variables declared with let keyword can be changed.
+const -The value of variables declared with const keyword cannot be changed.
+
+When to Use var, let, or const?
+1. Always declare variables
+
+2. Always use const if the value should not be changed
+
+!!!!3. Always use const if the type should not be changed (Arrays and Objects) !!!!!!! (because in let we can store any type of values).
+
+4. Only use let if you can't use const
+
+5. Only use var if you MUST support old browsers.
+
+!!! Note: let carName; = stores undefined value.
+
+We can't redeclare variable with let & const but we can reeclare with var.
+
+!!!!!!!
+let x = "5" + 2 + 3;//output 523
+let x = 2 + 3 + "5";//output 55.
+
+!!!!***let and const have block scope and we need to declare them before we use it and we cannot redcalre with in same block scope.
+
+!!!for const
+Incorrect Example: 
+const PI;
+PI = 3.14159265359;
+
+Correct Example: const PI = 3.14159265359;
+
+Const Array:
+const cars = ["Saab", "Volvo", "BMW"];//if we give let it will create a issue because it will also stores other data types in let.
+
+// Change an element:
+cars[0] = "Toyota";
+
+// Add an element:
+cars.push("Audi");
+
+Note: for above example it store only reference  not the value so we can update array values.
+
+Example for const object reference:
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript const</h2>
+
+<p>Declaring a constant object does NOT make the objects properties unchangeable:</p>
+
+<p id="demo"></p>
+
+<script>
+// Create an object:
+const car = {type:"Fiat", model:"500", color:"white"};
+
+// Change a property:
+car.color = "red";
+
+// Add a property:
+car.owner = "Johnson";
+
+//delete
+delete person.age;
+delete person["age"];
+
+// Display the property:
+document.getElementById("demo").innerHTML = "Car owner is " + car.owner; 
+</script>
+
+</body>
+</html>
+
+
+***Arthematic operators.
+exponentiation Example(**)=  x ** 2 = x power 2// alternate Math.pow(x,2).
+
+
+Declaring empty object
+Example 1 : const obj={};
+Example 2: const person = new Object();//we can also do like this
+
+***objects are like hash maps in java.
+
+Different ways to access object properties.
+Example 1: person.lastName;
+Example 2: person["lastName"];
+
+Note: in js Objects are Key 
+Objects containes properties and methods.
+
+Having object inside object
+example: const myObj = {
+  name: "John",
+  age: 30,
+  myCars: {
+    car1: "Ford",
+    car2: "BMW",
+    car3: "Fiat"
+  }
+}
+
+Different types of calling properties.
+myObj.myCars.car2;
+myObj.myCars["car2"];
+myObj["myCars"]["car2"];
+
+!!!!Object Method Example:
+<script>
+const person = {
+  firstName: "John",
+  lastName: "Doe",
+  id: 5566,
+  fullName: function() {
+    return this.firstName + " " + this.lastName;
+  }
+};
+
+!!!Accessing method.
+name = person.fullName();
+
+!!ADDing a methodconst person = {
+  firstName: "John",
+  lastName: "Doe",
+  id: 5566,
+};
+
+// Add a Method
+person.name = function() {
+  return this.firstName + " " + this.lastName;
+};
+
+//other method to convert to uppercase
+person.name = function() {
+  return (this.firstName + " " + this.lastName).toUpperCase();
+};
+
+
+Different ways to print object elements
+Example 1:for loop 
+let text = " ";
+for(let x in person){
+text += person[x];
+}
+output:
+John 30 New York
+
+
+Example 2: Object.values().
+const myArray = Object.values(person);
+output: John,30,New York
+
+
+Example 3: Object.entries().
+<script>
+const fruits = {Bananas:300, Oranges:200, Apples:500}; 
+
+let text = "";
+for (let [fruit, amount] of Object.entries(fruits)) {
+  text += fruit + ": " + amount + "<br>";
+}
+
+document.getElementById("demo").innerHTML = text;
+</script>
+<script>
+const fruits = {Bananas:300, Oranges:200, Apples:500}; 
+
+let text = "";
+for (let [fruit, amount] of Object.entries(fruits)) {
+  text += fruit + ": " + amount + "<br>";
+}
+
+document.getElementById("demo").innerHTML = text;
+</script>
+
+
+//output : Bananas: 300
+Oranges: 200
+Apples: 500
+
+example 4: JSON.stringify();
+JSON.stringify(person)
+Output: {"name":"John","age":30,"city":"New York"}
+
+JS object Constructors
+Sometimes we need to create many objects of the same type.
+To create an object type we use an object constructor function.
+It is considered good practice to name constructor functions with an upper-case first letter.
+Example 1:
+<script>
+// Constructor Function for Person objects
+function Person(first, last, age, eye) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eye;
+}
+
+// Create a Person object
+const myFather = new Person("John", "Doe", 50, "blue");
+
+// Display age
+document.getElementById("demo").innerHTML =
+"My father is " + myFather.age + "."; 
+</script>
+
+
+Example 2:
+<script>
+
+// Constructor function for Person objects
+function Person(first, last, age, eye) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eye;
+}
+
+// Create two Person objects
+const myFather = new Person("John", "Doe", 50, "blue");
+const myMother = new Person("Sally", "Rally", 48, "green");
+
+document.getElementById("demo").innerHTML =
+"My father is " + myFather.age + ". My mother is " + myMother.age + "."; 
+
+</script>
+
+Example 3:
+<script>
+
+// Constructor function for Person objects
+function Person(first, last, age, eye) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eye;
+  this.nationality = "English";
+}
+
+// Create 2 Person objects
+const myFather = new Person("John", "Doe", 50, "blue");
+const myMother = new Person("Sally", "Rally", 48, "green");
+
+// Display nationality
+document.getElementById("demo").innerHTML =
+"My father is " + myFather.nationality + ". My mother is " + myMother.nationality; 
+</script>
+
+Example4 :
+<script>
+// Constructor function for Person objects
+function Person(first, last, age, eye) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eye;
+}
+
+// Create 2 Person objects
+const myFather = new Person("John", "Doe", 50, "blue");
+const myMother = new Person("Sally", "Rally", 48, "green");
+
+// Add nationality to first object
+myFather.nationality = "English";
+
+// Display nationality 
+document.getElementById("demo").innerHTML =
+"My father is " + myFather.nationality; 
+</script>
+
+Example 5: this won't work.
+<script>
+// Constructor function for Person Objects
+function Person(first, last, age, eye) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eye;
+}
+
+// Create 2 Person Objects
+const myFather = new Person("John", "Doe", 50, "blue");
+const myMother = new Person("Sally", "Rally", 48, "green");
+
+// Will Not Work
+Person.nationality = "English";
+
+// Display Nationality
+document.getElementById("demo").innerHTML =
+"The nationality of my father is " + myFather.nationality; 
+</script>
+
+Example 5(ii)-this will work
+Person.prototype.nationality = "English";
+
+Example 6.
+<script>
+// Constructor Function for Person objects
+function Person(first, last, age, eye) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eye;
+  this.fullName = function() {
+    return this.firstName + " " + this.lastName
+  };
+}
+
+// Create a Person object
+const myFather = new Person("John", "Doe", 50, "blue");
+
+// Display full name
+document.getElementById("demo").innerHTML =
+"My father is " + myFather.fullName(); 
+
+</script>
+
+Example 7:
+<script>
+// Constructor function for Person Objects
+function Person(first, last, age, eye) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eye;
+}
+
+// Create 2 Person objects
+const myFather = new Person("John", "Doe", 50, "blue");
+const myMother = new Person("Sally", "Rally", 48, "green");
+
+// Add a Name Method
+myMother.changeName = function (name) {
+  this.lastName = name;
+}
+
+// Change Name
+myMother.changeName("Doe");
+
+// Display fullName
+document.getElementById("demo").innerHTML =
+"My mother's last name is " + myMother.lastName; 
+</script>
+
+
+Example8 :
+<script>
+// Constructor Function for Person Objects
+function Person(firstName,lastName,age,eyeColor) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.age = age;
+  this.eyeColor = eyeColor;
+}
+
+// Create a Person Object
+const myMother = new Person("Sally","Rally",48,"green");
+
+Person.prototype.changeName = function (name) {
+  this.lastName = name;
+}
+
+// Change Name
+myMother.changeName("Doe");
+
+// Display Name
+document.getElementById("demo").innerHTML =
+"My mother's last name is " + myMother.lastName;
+</script>
+
+!!!Note: Object constructor function name should start with capital Letter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
