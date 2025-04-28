@@ -1,0 +1,111 @@
+DOMS
+
+windows is a global object and console.log alert methods are part of it.
+even DOM object is also part of it.through dom we acces html in js to update in dynamically.
+
+Note:
+1.we use console.log for printing normal elemnts
+2.we use console.dir to print dom objects of html.
+
+Differnt examples to acces dom object dynamically.
+1.document.body.style.nackgroundcolor="blue";
+2.document.body.childNodes[1].innerText="hellowworld";
+
+and we have also differnt types to acces by class is and tag
+1.document.getElementById("hello)=>retrus null in case of id not exists.
+2.document.getElemetByClassName("hello")=>return html collection looks like an array return empty colections
+if class does not exit.
+3.document.getElementByTagName("p")=>this also returns html collections.
+
+EasyWay using queryselector one step solution for above three.
+1.document.querySelector("p");//we can also replace p with id or class ==>returns first elemt with tag p.
+2.document.querySelectorAll("p");//returns all elements with p tag.
+
+Note :in querySelect we give className with . and id with #.
+
+
+Above are the examples to get now to change properties value we use.
+1.innterText=to uodate text. it gives al texxts insided div
+2.innerHTML=to update ELement. same asa bove all elemts.
+3.tagName=returns tage nam of element.
+4.childNodes[1]=to get childnodes. -->Situation	Use
+Want every node (including text and comment)?
+5.children,firstChild,lastChild to get childrens. --> Situation	Use
+Want only HTML elements?
+6.textContent --works same as innerTExt but used when to udate hiddencontent.
+
+Note(new concept)=strig interpolatio we use `
+String interpolation in JavaScript means inserting variables or expressions inside a string easily.
+example.
+Example 1: Without interpolation (old style)
+javascript
+Copy
+Edit
+let name = "Rohit";
+let message = "Hello, " + name + "!";
+console.log(message);  // Hello, Rohit!
+Here you are joining (+) manually.
+
+Example 2: With interpolation (new, cleaner way)
+javascript
+Copy
+Edit
+let name = "Rohit";
+let message = `Hello, ${name}!`;
+console.log(message);  // Hello, Rohit!
+Much cleaner and easier to read ✅
+
+You can even run expressions inside ${}
+
+Attribues updation-we need to get respective elemet to get or update attributes.
+.getAtrribute()
+.setAttribute(name,value).
+
+
+*****how to add new elements.
+1st step :to create elemet let node=document.createElemet("button")
+2nd step 
+note: let divs=document.querySelector("div")
+2.1 divs.append(node);
+2.2 divs.prepend(node);
+2.3 divs.before(node);
+2.4 divs.after(node);
+
+2.5 to delete node.remove();
+
+Note:appendChild if we want to add only one lement we use appendchild 
+example: container.appendChild(p);
+for append example : container.append(p1, p2, "Some text also!");
+
+remove vs removechild()
+eemove <div id="container">
+  <p id="para1">Hello</p>
+</div>
+
+let para = document.getElementById("para1");
+para.remove(); 
+
+let container = document.getElementById("container");
+let para = document.getElementById("para1");
+
+container.removeChild(para); 
+
+***** to add new class or remove we can use
+node.clasList.add(classname);
+node.clasList.remove(classname);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

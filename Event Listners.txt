@@ -1,0 +1,64 @@
+Event Listners.
+<button onclick="console.log('button one clicked');alert('button 1 clicked')">Click me</button>
+<button ondblclick="alert('button two clicked twice')">Click me 2 times</button>
+3.onmouseover
+
+above are the exmaples of inline event handling.
+
+external  event handling
+let a=document.querySelector("#btn1");
+a.onclick=()=>{
+   console.log('button one clicked');
+    alert('button 1 clicked')
+}
+
+
+*******Note 1: in event handling js file has more priority than inline.
+*******Note 2: if we have multiple events on click then latest will execute  by ignoring first  event.
+
+a.onclick=(e)=>{
+   console.log('button one clicked');
+    alert('button 1 clicked')
+}
+
+e store all the values of the event
+console.log(e) to get all necessary properties such as target
+
+
+Event Listners.
+*******Note 2: if we have multiple events on click then latest will execute  by ignoring first  event.--to solve this
+ we have event listners
+we can create multiple event listners for single event.
+example:
+let a=document.querySelector("#btn1");
+a.addEventListener("click",()=>{
+    console.log("click event triggered");}
+)
+a.addEventListener("click",()=>{
+    console.log("click event triggered two");
+})
+let three=()=>{
+    console.log("click event triggered three");}
+a.addEventListener("click",three);
+a.removeEventListener("click",three);
+
+// to remove we nned to store call back in seperate variable.
+toggle code.
+let a=document.querySelector("button");
+var currMode="light";
+a.addEventListener("click",()=>{
+    if(currMode=="light"){
+        a.classList.add("darkmode");
+        currMode="dark";
+    }else{
+        a.classList.remove("darkmode");
+        currMode="light";
+    }
+}
+)
+
+
+
+
+
+
