@@ -1,0 +1,181 @@
+graphl- we can only query the data we required but with servelets it is not possible.
+1.General configuration browser and create new config folder. and allow cf and graphl permissions.
+2.general confragment model you can see new config folder inside it we create our cf model.
+2.1 single line text,multiline text,boolean
+2.2 json object data type
+2.3 fragment refernce data type takes other cf as input
+2.4 we can also refere other fragment in multiline text
+2.5 contetnt refernce -to include dam assets
+3.create new folder in assets file and add cloud services as new config created for folder then you use cf models
+inside config folder to create cfs.
+4.create graphql end point by giving name and config folder path.
+
+Graphql editor
+we have
+1. ByPath
+2.List
+List basic example:
+{
+  authorList{
+    items{
+      authorName
+    }
+  }
+}
+
+example 2: {
+  bookList{
+    items{
+      title
+      authors { //in here we only gave author but {} and inside items are auto filled 
+        _path
+        _variation
+        authorName
+      }
+    }
+  }
+}
+
+example3 
+{
+  bookList{
+    items{
+      title
+      authors {
+        _path
+        _variation
+        authorName
+        profile { //in here also i just gave rofile the rest is autofilled as it is multifield we can specify any one
+          html
+          markdown
+          plaintext
+          json
+        }
+      }
+    }
+  }
+}
+
+by path example 1
+{
+  bookByPath( _path: "/content/dam/graphql-demo-final/book-1"){
+    item{
+      _path
+      title
+    }
+    
+  }
+}
+
+Note : we can use filters with byList only.
+Filters using Variation {
+  bookList(variation:"master"){
+    items{
+      _path
+    }
+  }
+}
+
+filters
+uing isbn example:
+{
+  bookList(filter:{
+    isbn:{
+      _expressions:{
+        value:"ISBN-2"
+      }
+    }
+  }){
+    items{
+      _path
+      isbn
+    }
+  }
+}
+
+filter using variation 
+if bookone has variation three and book 2 has no variation if we filter using variation three then we get book
+one variation three and book 2 master variation as it doesn't have varitaion 3.
+example:
+{
+  bookList(variation:"three"){
+    items{
+      _variation
+      _path
+      isbn
+    }
+  }
+}
+
+output:
+{
+  "data": {
+    "bookList": {
+      "items": [
+        {
+          "_variation": "three",
+          "_path": "/content/dam/graphql-demo-final/book-1",
+          "isbn": "ISBN-1-WIth _VAriation"
+        },
+        {
+          "_variation": "master",
+          "_path": "/content/dam/graphql-demo-final/book-2",
+          "isbn": "ISBN-2"
+        }
+      ]
+    }
+  }
+}
+
+Graphql Merging multiple requests.
+example:
+{
+  bookList(variation:"three"){
+    items{
+      _variation
+      _path
+      isbn
+    }
+  }
+  authorList{
+    items{
+      _path
+      _variation
+    }
+  }
+}
+
+passing input as parameter input is tag example:
+
+GraphiQL Explorer
+Endpoint 
+faq-endpoint
+Persisted Queries
+Docs
+query($tag : String!){
+  faqList(
+    filter:{
+      tag:{
+        _expressions:[{value:$tag}] //use [] for expression
+      }
+    }
+  ){
+    items{
+      _path
+      _variation
+      question
+      answer {
+        plaintext     
+      }
+      tag
+    }
+  }
+}
+​
+​
+
+
+
+
+
+
