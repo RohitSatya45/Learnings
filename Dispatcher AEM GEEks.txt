@@ -1,0 +1,63 @@
+Dispatcher
+Opening Command set DISP_LOG_LEVEL=debug
+set REWRITE_LOG_LEVEL=debug
+bin\docker_run.cmd src host.docker.internal:4503 8081
+
+ Aem is used to store and build the content but it doesn't have fetaure to server content so
+ 
+ we need webserver apachae is the one but when request comes to apache it doesn't know how to fetch content
+ and serve to end user then disp  ome sin to play it is  amodule from aem store in apache tells how to fetch
+ and show to end user.
+ 
+ 
+ Disp is a module in webserver it tells apache webserver how to react to requests
+ 
+ 1.httpd.conf this is starting point of webserver(apache)
+ 2.dispatcher.any where dispatcher configurations lies.
+ 
+ so as per adobe to manage large application we make individual folders
+httpd.conf
+├── dispatcher_vhost.conf
+│   └── conf.d (apache config)
+│       ├── vhost
+│       ├── Rewrite rules
+│       ├── variables
+│       └── whitelist
+└── dispatcher.any
+    └── conf.dispatcher.d(dispatcher config)
+        ├── farms
+        ├── cache
+        ├── filters
+        ├── renders
+        └── virtualhost
+		
+if we have multiple website we use .vshot for each individual and call dispatcher.any individuall.
+
+
+Example:
+🔹 Apache + Dispatcher job
+
+Think of Apache server as a big hotel 🏨.
+
+That one hotel can have many rooms (websites).
+
+Each website has its own entrance rules.
+🔹 Why dispatcher_vhost.conf?
+
+Apache needs to know which website a visitor wants.
+
+Example:
+If someone types site1.com, they should go to Website 1.
+If someone types site2.com, they should go to Website 2.
+This matching is done by VirtualHosts (dispatcher_vhost.conf).
+So yes 👉 one Apache server can host multiple websites by using multiple dispatcher_vhost.conf files.
+
+Apache (hotel)
+ ├── site1.com → dispatcher_vhost1.conf → dispatcher1.any (rules)
+ └── site2.com → dispatcher_vhost2.conf → dispatcher2.any (rules)
+
+
+2.dispatcher flush agentsetup in AEM:
+Note** we can have dispatcher flush agent on publish so that whenver new changes are published then 
+dispplush activate.
+ 

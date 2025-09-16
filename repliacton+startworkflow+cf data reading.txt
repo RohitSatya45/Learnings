@@ -1,0 +1,139 @@
+package com.example.aem.core.servlets;
+
+import com.adobe.granite.workflow.WorkflowService;
+import com.adobe.granite.workflow.WorkflowSession;
+import com.adobe.granite.workflow.model.WorkflowModel;
+import com.adobe.granite.workflow.exec.WorkflowData;
+import com.adobe.granite.workflow.exec.Workflow;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.servlets.SlingAllMethodsServlet;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import javax.jcr.Session;
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+import java.io.IOException;
+
+@Component(service = Servlet.class,
+        property = {
+                "sling.servlet.paths=/bin/triggerWorkflow",
+                "sling.servlet.methods=POST"
+        })
+public class TriggerWorkflowServlet extends SlingAllMethodsServlet {
+
+    @Reference
+    private WorkflowService workflowService;
+
+    @Override
+    protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response)
+            throws ServletException, IOException {
+
+        try {
+            Session session = request.getResourceResolver().adaptTo(Session.class);
+            WorkflowSession wfSession = workflowService.getWorkflowSession(session);
+            WorkflowModel model = wfSession.getModel("/var/workflow/models/my-workflow/jcr:content/model");
+            WorkflowData workflowData = wfSession.newWorkflowData("JCR_PATH", "/content/mysite/en/page1");
+            Workflow workflow = wfSession.startWorkflow(model, workflowData);
+            response.getWriter().write("Workflow triggered successfully! ID: " + workflow.getId());
+        } catch (Exception e) {
+            response.getWriter().write("Error triggering workflow: " + e.getMessage());
+        }
+    }
+}
+
+
+package com.example.aem.core.servlets;
+
+import com.day.cq.replication.Replicator;
+import com.day.cq.replication.ReplicationActionType;
+import com.day.cq.replication.ReplicationException;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.servlets.SlingAllMethodsServlet;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import javax.jcr.Session;
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+import java.io.IOException;
+
+@Component(service = Servlet.class,
+        property = {
+                "sling.servlet.paths=/bin/replicateContent",
+                "sling.servlet.methods=POST"
+        })
+public class ReplicateContentServlet extends SlingAllMethodsServlet {
+
+    @Reference
+    private Replicator replicator;
+
+    @Override
+    protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response)
+            throws ServletException, IOException {
+
+        String path = request.getParameter("path");
+        if (path == null || path.isEmpty()) {
+            response.getWriter().write("Please provide a path to replicate.");
+            return;
+        }
+
+        Session session = request.getResourceResolver().adaptTo(Session.class);
+        try {
+            replicator.replicate(session, ReplicationActionType.ACTIVATE, path);
+            response.getWriter().write("Replication successful: " + path);
+        } catch (ReplicationException e) {
+            response.getWriter().write("Replication failed: " + e.getMessage());
+        }
+    }
+}
+
+
+. JCR API (Java Content Repository API)
+Session session = resourceResolver.adaptTo(Session.class);
+
+Node node = session.getNode("/content/site/page");
+
+node.setProperty("title", "My Page");
+
+Sling API
+Resource resource = resourceResolver.getResource("/content/site/page");
+
+ValueMap props = resource.adaptTo(ValueMap.class);
+
+String title = props.get("jcr:title", String.class);
+
+
+contentf ragment access using 
+import com.adobe.cq.dam.cfm.ContentFragment;
+import com.adobe.cq.dam.cfm.ContentFragmentManager;
+import org.apache.sling.api.resource.ResourceResolver;
+
+public class CFReader {
+
+    public void readCF(ResourceResolver resolver, String cfPath) {
+        ContentFragmentManager cfManager = resolver.adaptTo(ContentFragmentManager.class);
+        if (cfManager != null) {
+            ContentFragment cf = cfManager.getContentFragment(cfPath);
+            if (cf != null) {
+                String title = cf.getElement("title").getContent();
+                String description = cf.getElement("description").getContent();
+
+                System.out.println("Title: " + title);
+                System.out.println("Description: " + description);
+            }
+        }
+    }
+}
+
+Resource cfResource = resourceResolver.getResource("/content/dam/mysite/fragments/article");
+ContentFragment cf = cfResource.adaptTo(ContentFragment.class);
+
+if (cf != null) {
+    String title = cf.getElement("title").getContent();
+    String body = cf.getElement("body").getContent();
+    System.out.println("Title: " + title);
+    System.out.println("Body: " + body);
+}

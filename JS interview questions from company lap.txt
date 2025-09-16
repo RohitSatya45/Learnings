@@ -1,0 +1,141 @@
+1.function scope var example
+function testVar() {
+  if (true) {
+    var x = 10;
+  }
+  console.log(x); // 10 ✅ (still accessible outside the block)
+}
+testVar();
+
+
+2.block scope (let,const)
+function testLetConst() {
+  if (true) {
+    let y = 20;
+    const z = 30;
+    console.log(y, z); // 20 30
+  }
+  console.log(typeof y); // ReferenceError ❌ (y not defined here)
+}
+testLetConst();
+
+1.map/filter
+const nums = [1, 2, 3];
+
+// Mistake: forgot return
+const doubled = nums.map(n => { n * 2 });
+console.log(doubled); // [undefined, undefined, undefined] ❌
+
+// Correct
+const doubled2 = nums.map(n => n * 2);
+console.log(doubled2); // [2, 4, 6] ✅const nums = [1, 2, 3, 4];
+
+const evens = nums.filter(n => n % 2 === 0);
+console.log(evens); // [2, 4] ✅
+
+const greaterThanTen = nums.filter(n => n > 10);
+console.log(greaterThanTen); // [] (empty array) ✅
+
+
+
+let var with async differnces
+for (var i = 1; i <= 5; i++) {
+  setTimeout(() => {
+    console.log("var i:", i);
+  }, i * 1000);
+}
+var i: 6
+var i: 6
+var i: 6
+var i: 6
+var i: 6
+Note:Step by step:
+
+The loop runs from i = 1 to i = 5.
+
+After the loop finishes, i becomes 6 (because the loop condition i <= 5 fails when i = 6).
+
+setTimeout callbacks run later, after the loop is done.
+
+At that time, i is already 6.
+
+All the callbacks share the same i (function-scoped).
+
+for (let i = 1; i <= 5; i++) {
+  setTimeout(() => {
+    console.log("let i:", i);
+  }, i * 1000);
+}
+let i: 1
+let i: 2
+let i: 3
+let i: 4
+let i: 5
+
+📌 Definition of Currying
+
+Currying is the process of transforming a function that takes multiple arguments into a 
+sequence of functions, each taking a single argument.
+
+
+Hoisting
+
+📌 Definition of Hoisting
+
+Hoisting is JavaScript’s default behavior of moving function and variable declarations to the top of their scope (before code execution).
+
+👉 Only the declarations are hoisted, not the initializations/assignments.
+
+🔹 Example 1 (Variable hoisting with var)
+console.log(a); // undefined (not error)
+var a = 10;
+
+
+What happens internally:
+
+var a;          // declaration hoisted
+console.log(a); // undefined
+a = 10;         // initialization stays
+
+🔹 Example 2 (Function hoisting)
+sayHi(); // ✅ works, because function declaration is hoisted
+
+function sayHi() {
+  console.log("Hello!");
+}
+
+
+But if you use function expression, it won’t work:
+
+sayHello(); // ❌ Error: sayHello is not a function
+
+var sayHello = function() {
+  console.log("Hello!");
+}
+
+🔹 let and const hoisting
+
+They are also hoisted, but placed in the Temporal Dead Zone (TDZ).
+
+You can’t access them before declaration.
+
+console.log(x); // ❌ ReferenceError
+let x = 5;
+
+
+✅ Summary:
+Hoisting = moving declarations (variables, functions) to top of scope.
+
+var → hoisted, initialized as undefined.
+
+let/const → hoisted but in TDZ (can’t access before declaration).
+
+Function declarations → fully hoisted.
+
+Summary:
+
+Function expressions (with var, let, const) → only variable is hoisted (set to undefined for var, TDZ for let/const), function assigned later.
+
+Function declarations → entire function is hoisted and available before code runs.
+
+

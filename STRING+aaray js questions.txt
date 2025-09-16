@@ -1,0 +1,61 @@
+1. How do you remove duplicates from an array?
+const arr = [1, 2, 2, 3, 4, 4];
+const unique = [...new Set(arr)];
+console.log(unique); // [1, 2, 3, 4]
+
+2. How to flatten an array?
+const arr = [1, [2, 3], [4, [5]]];
+const flat = arr.flat(2); // depth 2
+console.log(flat); // [1, 2, 3, 4, 5]
+
+3. How to check if an array contains a value?
+const arr = [1, 2, 3];
+console.log(arr.includes(2)); // true
+console.log(arr.indexOf(2) !== -1); // true
+
+4. Remove falsy values from array
+const arr = [0, 1, false, 2, '', 3];
+const truthy = arr.filter(Boolean);
+console.log(truthy); // [1,2,3]
+
+array to string
+const arr = [1,2,3];
+console.log(arr.join(",")); // "1,2,3"
+
+
+✅ Summary
+filter(Boolean) is a shortcut to remove all falsy values (false, 0, '', null, undefined, NaN) 
+from an array.
+
+3. Count occurrence of a character
+const str = "javascript";
+const count = [...str].filter(ch => ch === "a").length;
+console.log(count); // 2
+
+5. Remove whitespaces from a string
+const str = "   hello world   ";
+console.log(str.trim()); // "hello world"
+
+6. Check if a string contains a substring
+const str = "hello world";
+console.log(str.includes("world")); // true
+
+function findMissingNumber(arr) {
+  const n = arr.length + 1; // because one number is missing
+  const total = (n * (n + 1)) / 2;
+  const sumArr = arr.reduce((a, b) => a + b, 0);
+  return total - sumArr;
+}
+
+console.log(findMissingNumber([1,2,4,5,6])); // 3
+
+
+7. Find the first non-repeating character
+function firstNonRepeatChar(str) {
+  for (let i = 0; i < str.length; i++) {
+    if (str.indexOf(str[i]) === str.lastIndexOf(str[i])) return str[i];
+  }
+  return null;
+}
+
+console.log(firstNonRepeatChar("javascript")); // "j"
