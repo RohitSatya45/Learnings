@@ -1,0 +1,156 @@
+“Yes, package.json lists the dependencies required for the project,
+ while package-lock.json records the exact versions that were actually installed.”
+ 
+ Yes 👍 exactly! Both import and require are used to load modules/packages into your JavaScript code.
+ require → CommonJS way (older style, used in Node.js).
+
+const fs = require('fs');  // load file system module
+
+
+import → ES6 modern way (used in React and modern JS).
+
+import React from 'react';  // load React
+import axios from 'axios';  // load axios
+
+ChatGPT said:
+
+Great question 👍 Let me explain in very simple words:
+
+The CSS Box Model is how the browser calculates the space an element takes on a webpage.
+
+Every element is like a box made of 4 parts:
+
+Content → the actual text, image, or data inside.
+
+Padding → space between the content and the border (like cushioning).
+
+Border → the line around the element.
+
+Margin → space outside the border (distance from other elements).
+
+Example :
+🧮 Formula
+
+Total Width (length)
+
+width + left padding + right padding + left border + right border + left margin + right margin
+
+
+Total Height (breadth)
+
+height + top padding + bottom padding + top border + bottom border + top margin + bottom margin
+
+
+In React, <></> is called a Fragment (short syntax).
+
+📌 What is a Fragment?
+
+A way to group multiple elements without adding an extra <div> to the DOM.
+
+✅ In short:
+
+Use <></> → for simple grouping.
+
+Use <React.Fragment> → when you need to add attributes like key.
+
+examples:
+return (
+  <>
+    <h1>Title</h1>
+    <p>Description</p>
+  </>
+);
+
+return (
+  <React.Fragment key={item.id}>
+    <h1>{item.title}</h1>
+    <p>{item.desc}</p>
+  </React.Fragment>
+);
+
+
+✅ Interview short answer:
+“React uses the Virtual DOM to calculate changes efficiently. 
+When state or props change, React updates the Virtual DOM, compares it with the previous one, 
+and only the differences are applied to the actual DOM.”
+
+Yes 👍
+
+Angular → It is a full-fledged framework (developed by Google).
+
+Provides everything out of the box: routing, forms, state management, HTTP services, dependency injection, etc.
+
+Opinionated: you follow Angular’s way of doing things.
+
+React → It is a JavaScript library (developed by Meta/Facebook).
+
+Mainly focuses on building UI components.
+
+For routing, state management, API handling, etc., you need to add third-party libraries (like React Router, Redux, Axios).
+
+More flexible, less opinionated.
+
+👉 So the main difference: Angular = framework (all-in-one), React = library (UI-focused, add what you need).
+
+
+
+Styled COmponnets 
+✅ Why it’s powerful
+
+No conflicts → You don’t worry about two components using the same CSS class name.
+
+Component-specific → Styles are tied to the component itself.
+
+Maintainable → You don’t end up with one huge global CSS file.
+Dynamic Styling with Props
+
+
+Examole:import React from "react";
+import styled from "styled-components";
+
+// Define styled component
+const Button = styled.button`
+  background: ${(props) => (props.primary ? "black" : "green")};
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  display: block;
+
+  &:hover {
+    background: blue;
+  }
+`;
+
+// Use it in the same file
+function App() {
+  return (
+    <div>
+      <Button>Normal Button</Button>
+      <Button primary>Primary Button</Button>
+    </div>
+  );
+}
+
+export default App;
+
+
+display:different scenarios
+
+block → full width, new line, respects width/height.
+
+inline → sits inline, ignores width/height.
+
+inline-block → sits inline but respects width/height.
+
+Do you mean Babel (with one "b")?
+
+👉 Babel is a JavaScript compiler mainly used in React and modern web development.
+It converts modern JavaScript (ES6+ features) into older versions of JavaScript that can run in all browsers.
+
+
+Why we need key
+We need a key in React so that React can uniquely identify each list item. 
+This helps React know which items changed, were added, or removed, and update only 
+those instead of re-rendering the whole list.”

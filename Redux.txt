@@ -6,16 +6,254 @@ Need to install
 2.npm install react-redux
 3.npm install redux-thunk
 4.npm install redux-devtool-extension
+5.npm install @reduxjs/toolkit react-redux
 
 1.Redux we have four different components.
-1.React component(normal).
+1.React component(normal)- ehich is rendered in ui. 
 2.Store component - where all the state values are stored.
 3.Reducer Component - throught reducer we interact with store and  access state values in our react component.
 4.Action Creators -through wich we modify state values. it will create action and dispatches to the reducer with 
-help of redux-thunk.
+help of redux-thunk and reducer make the action in state which we are intended to so.
 
 
+App.js
+import React from 'react'
+import './store'
+const App = () => {
+  return (
+    <div>
+      <center>
+        Reudux
+      </center>
+    </div>
+  )
+}
+
+export default App
+
+Store.js
+import {createStore} from 'redux';
+const data={
+    balance:0,
+    fullName:"",
+    mobile:null
+}
+function accountReducer(state=data,action){
+    switch(action.type){
+        case 'UPDATE_BALANCE':
+            return{...state,balance:state.balance+action.payload}
+        case 'UPDATE_FULL_NAME':
+            return{...state,fullName:action.payload} 
+        case 'UPDATE_MOBILE':
+            return{...state,mobile:action.payload} 
+        default:        
+            return state; 
+    }
+}
+const store=createStore(accountReducer)
+console.log(store.getState());
+store.dispatch({type:'UPDATE_BALANCE',payload:1000})
+console.log(store.getState());
+store.dispatch({type:'UPDATE_FULL_NAME',payload:'John Doe'})
+console.log(store.getState());
+store.dispatch({type:'UPDATE_MOBILE',payload:'1234567890'})
+console.log(store.getState());
 
 
+form.js
 
+import React,{useState} from 'react'
+import { useDispatch } from 'react-redux'
+const Form = () => {
+  let dispatch=useDispatch();
+  const[amount,setAmount]=useState(0);
+  const[name,setName]=useState("");
+  const[number,setNumber]=useState(" ");
+ 
+  return (
+    <>
+    <div className="container">
+      <h2>Form</h2>
+      <div className="row">
+        <div className="col-4">
+          <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} className="form-control" placeholder="Enter your Deposit amount" />
+        </div>
+        <button className="btn btn-primary col-2" onClick={()=>dispatch({type:"UPDATE_BALANCE_DEPOSIT",payload:amount})}>Deposit</button>
+         <button className="btn btn-danger mx-2 col-2" onClick={()=>dispatch({type:"UPDATE_BALANCE_WITHDRAW",payload:amount})}>Withdraw</button>
+      </div>
+      <div className="row mt-2">
+        <div className="col-4">
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder="Enter your Name" />
+        </div>
+        <button className="btn btn-primary col-2" onClick={()=>dispatch({type:"UPDATE_FULL_NAME",payload:name})}>Update</button>
+      </div>
+      <div className="row mt-2">
+        <div className="col-4">
+          <input type="number" value={number} onChange={(e) => setNumber(e.target.value)} className="form-control" placeholder="Enter your Number" />
+        </div>
+        <button className="btn btn-primary col-2" onClick={()=>dispatch({type:"UPDATE_MOBILE",payload:number})}>Update</button>
+        </div>
+        <button className="btn btn-danger mt-2 col-2" onClick={()=>dispatch({type:"RESET"})}>RESET</button>
+      </div>
+    </>
+  )
+}
+export default Form
 
+Account.js
+import React from 'react'
+import {useSelector} from 'react-redux'
+const Account = () => {
+    let data=useSelector((state)=>{
+        return state;
+    })
+  return (
+    <>
+    <div className="container">
+        <h1 className="text-primary">Account Details</h1>
+        <table className="table table-bordered w-50">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Mobile</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{data.fullName}</td>
+                    <td>{data.mobile}</td>
+                    <td>{data.balance}</td>
+                </tr>
+                </tbody>
+        </table>
+    </div>
+    </>
+
+  )
+}
+export default Account
+
+index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store from './store';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+Store.jsimport {createStore} from 'redux';
+const data={
+    balance:0,
+    fullName:"",
+    mobile:null
+}
+function accountReducer(state=data,action){
+    switch(action.type){
+        case 'UPDATE_BALANCE_WITHDRAW':
+            return{...state,balance:state.balance- +action.payload}
+        case 'UPDATE_BALANCE_DEPOSIT':
+            return{...state,balance:state.balance+ +action.payload}
+        case 'UPDATE_FULL_NAME':
+            return{...state,fullName:action.payload} 
+        case 'UPDATE_MOBILE':
+            return{...state,mobile:action.payload} 
+            case 'RESET':
+            return data;
+        default:        
+            return state; 
+    }
+}
+const store=createStore(accountReducer)
+export default store;
+
+Action.js
+export function deposit(amount) {
+  return {
+    type: "UPDATE_BALANCE_DEPOSIT",
+    payload: amount,
+  };
+}
+export function withdraw(amount) {
+  return {
+    type: "UPDATE_BALANCE_WITHDRAW",
+    payload: amount,
+  };
+}
+export function updateFullName(name) {
+  return {
+    type: "UPDATE_FULL_NAME",
+    payload: name,
+  };
+}
+export function updateMobile(number) {
+  return {
+    type: "UPDATE_MOBILE",
+    payload: number,
+  };
+}
+export function reset() {
+  return {
+    type: "RESET",
+  };
+}
+
+Form.js
+import React,{useState} from 'react'
+import { useDispatch } from 'react-redux'
+import {deposit}  from './Action'
+import {withdraw} from './Action'   
+import {updateFullName} from './Action'
+import {updateMobile} from './Action'
+import {reset} from './Action'
+const Form = () => {
+  let dispatch=useDispatch();
+  const[amount,setAmount]=useState(0);
+  const[name,setName]=useState("");
+  const[number,setNumber]=useState(" ");
+ 
+  return (
+    <>
+    <div className="container">
+      <h2>Form</h2>
+      <div className="row">
+        <div className="col-4">
+          <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} className="form-control" placeholder="Enter your Deposit amount" />
+        </div>
+        <button className="btn btn-primary col-2" onClick={()=>dispatch(deposit(amount))}>Deposit</button>
+         <button className="btn btn-danger mx-2 col-2" onClick={()=>dispatch(withdraw(amount))}>Withdraw</button>
+      </div>
+      <div className="row mt-2">
+        <div className="col-4">
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder="Enter your Name" />
+        </div>
+        <button className="btn btn-primary col-2" onClick={()=>dispatch(updateFullName(name))}>Update</button>
+      </div>
+      <div className="row mt-2">
+        <div className="col-4">
+          <input type="number" value={number} onChange={(e) => setNumber(e.target.value)} className="form-control" placeholder="Enter your Number" />
+        </div>
+        <button className="btn btn-primary col-2" onClick={()=>dispatch(updateMobile(number))}>Update</button>
+        </div>
+        <button className="btn btn-danger mt-2 col-2" onClick={()=>dispatch(reset())}>RESET</button>
+      </div>
+    </>
+  )
+}
+export default Form
+
+Note i=: in above actio is created through function so it is called action creator.

@@ -1,0 +1,105 @@
+1.App.css import in component different types.
+Src/App.js                               src/App.                        import './App.js'
+src/components/MyComponent.jsx	         src/App.css	                 import '../App.css';
+src/components/subfolder/Component.jsx	 src/App.css	                 import '../../App.css';
+
+
+2. sample structure
+my-app/
+├── src/
+│   ├── components/
+│   │   ├── MyComponent.jsx
+│   │   ├── subfolder/
+│   │   │   ├── SubComponent.jsx
+
+
+UseCases1.
+Components import in App.js
+import MyComponent from './components/MyComponent';  // Component in components/
+import SubComponent from './components/subfolder/SubComponent';  // Component in subfolder/
+
+UseCase2. 
+In MyComponent.jsx, you import SubComponent like this:
+import SubComponent from './subfolder/SubComponent'; 
+
+
+useCase3
+In SubComponent.jsx, you import MyComponent like this:
+import MyComponent from '../MyComponent';
+
+3.Importing images from Src and Public in App.js and MyComponent.jsx and  SubComponent.jsx
+
+USe case1 : impoerting source folder components in all three.
+import image1 from './assets/images/image1.jpg';      App.js
+import image2 from '../assets/images/image2.png';     MyComponent.jsx 
+import image2 from '../../assets/images/image2.png';  SubComponent.jsx
+
+Usage Example : <div>
+      <img src={image2} alt="Image from src" />
+    </div>
+	
+	
+UseCase2: <img src="/assets/images/image3.jpg" alt="Image from public" />
+
+Src Vs public Differnces.
+Static:
+Images that are part of your code (you know them at build time).
+→ These are perfect for src.
+
+Dynamic:
+Images that might change over time or come from external data (like user-uploaded images or images stored on a server).
+→ Better to keep these in public or load them from an external URL.
+
+If the image is part of your React app's design (logo, icons), store it in src.
+
+If you have a lot of images or need them to be dynamically accessed by URL, store them in public.
+ 
+ BootStrap
+ After Installing bootstraps 
+ we need to import in import 'bootstrap/dist/css/bootstrap.min.css'; in index.js ans App.js
+ 
+ Note: React jS, Bootsrap are librariries Anagular and MAterial UIs are frameworks.
+ 
+Note: if we want to use bootstrap js in our website we use react bootstap as bootstarp js has dependency on jquery
+wehich react doesn't like.
+ we use react boot-strap for js.
+ pre-bootstrap and import css.
+ npm install react-bootstrap
+ import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal'; to use
+
+exampple : <Button variant="primary" onClick={() => setShow(true)}>
+        Open Modal
+      </Button>
+	  
+	  
+in above example instead of clssName we use Variant when we use react boot strap components. we can use classNames
+foe custom classes in react bootstrap.
+
+Material UI.
+npm install @mui/material @emotion/react @emotion/styled
+Component Example:
+import Button from '@mui/material/Button';
+
+function App() {
+  return (
+    <Button variant="contained" color="primary">
+      Material UI Button
+    </Button>
+  );
+}
+
+⭐ Quick rule of thumb:
+👉 Small/medium project + classic design + speed? → React-Bootstrap.
+
+👉 Modern, scalable, high customization + advanced UI? → Material UI.
+
+
+ 
+
+
+
+
+
+
+

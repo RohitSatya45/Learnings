@@ -1,0 +1,73 @@
+custom Hooks
+
+Note: "Title is not part of JSX, so it shows current value. But ref is used in JSX, so it shows old value."
+
+import React, { useState, useEffect } from 'react'
+
+const App = () => {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    document.title = `Count-${count}`
+  }, [count])
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={() => setCount(c => c + 1)}>Increment</button>
+    </div>
+  )
+}
+
+export default App
+
+
+Note :if we have  two components like above we can create custom hooks.
+
+CUstom Hooks
+import React, { useEffect } from 'react'
+const useCount = (count) => {
+useEffect(()=>{
+      document.title = `Count-${count}`
+    },[count])
+}
+
+export default useCount
+
+COmpoennt 1
+import React, { useEffect } from 'react'
+import  useCount from './hooks/useCount'
+const Component1 = () => {
+    const[count, setCount] = React.useState(0);
+    useCount(count);
+  return (
+    <>
+    <div>Component1</div>
+    <button onClick={() => setCount(count+1)}>Count-{count}</button>
+    </>
+    
+  )
+}
+
+export default Component1
+
+Component 2
+import React, { useEffect } from 'react'
+
+const Component2 = () => {
+    const[count, setCount] = React.useState(0);
+    useEffect(()=>{
+      document.title = `Count-${count}`
+    },[count])
+  return (
+    <>
+    <div>Component2</div>
+    <button onClick={() => setCount(count+1)}>Count-{count}</button>
+    </>
+    
+  )
+}
+
+export default Component2
+
+Noge : so for every render all hooks get executed in same order which they are declared they are like functions.

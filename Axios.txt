@@ -1,0 +1,313 @@
+	Axios
+
+# Step 1: Create a new React app (if not already)
+npx create-react-app my-app
+cd my-app
+
+# Step 2: Install axios in your React project
+npm install axios
+
+# Step 3: Install json-server globally (one time only)
+npm install -g json-server
+
+# Step 4: Create db.json in the root of your project (manually or via command)
+echo { \"users\": [ { \"id\": 1, \"name\": \"Rohit\" } ] } > db.json
+
+# Step 5: In one terminal tab, start json-server
+json-server --watch db.json --port 3001
+
+# Step 6: In another terminal tab, start the React app
+npm start
+
+ 
+using --save-dev 
+# Step 1: Create a new React app (if not already)
+npx create-react-app my-app
+cd my-app
+
+# Step 2: Install json-server and concurrently as dev dependencies
+npm install --save-dev json-server concurrently
+
+# Step 3: Create db.json file in the root of your project with sample data
+echo { \"users\": [ { \"id\": 1, \"name\": \"Rohit\" } ] } > db.json
+
+# Step 4: Open package.json and replace the "scripts" section with:
+# (you can do this manually in a code editor)
+
+# "scripts": {
+#   "start": "concurrently \"npm run react\" \"npm run server\"",
+#   "react": "react-scripts start",
+#   "server": "json-server --watch db.json --port 3001"
+# }
+
+# Step 5: Start both React app and JSON server
+npm start
+
+Noted :for running two servers parrlery with single command then along with package json we need also
+npm install --save-dev json-server concurrently
+npm install -g json-server concurrently
+
+
+
+Post
+import React, { useState } from 'react'
+import axios from 'axios'
+
+const App = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  })
+
+  const changeHandler = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+
+    axios.post('http://localhost:3001/users', formData)
+      .then((response) => {
+        console.log('Form submitted successfully:', response.data)
+      })
+      .catch((error) => {
+        console.error('Error submitting form:', error)
+      })
+
+    setFormData({ name: '', email: '', password: '' })
+  }
+
+  return (
+    <form onSubmit={submitHandler}>
+      <label htmlFor="name">Name:</label>
+      <input type="text" id="name" name="name" value={formData.name} onChange={changeHandler} />
+
+      <label htmlFor="email">Email:</label>
+      <input type="email" id="email" name="email" value={formData.email} onChange={changeHandler} />
+
+      <label htmlFor="password">Password:</label>
+      <input type="password" id="password" name="password" value={formData.password} onChange={changeHandler} />
+
+      <input type="submit" value="Submit" />
+    </form>
+  )
+}
+
+export default App
+
+import React, { useState } from 'react'
+import axios from 'axios'
+
+const App = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  })
+
+  const changeHandler = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const submitHandler = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios.post('http://localhost:3001/users', formData)
+      console.log('Form submitted successfully:', response.data)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+    }
+    setFormData({ name: '', email: '', password: '' })
+  }
+
+  return (
+    <form onSubmit={submitHandler}>
+      <label htmlFor="name">Name:</label>
+      <input type="text" id="name" name="name" value={formData.name} onChange={changeHandler} />
+
+      <label htmlFor="email">Email:</label>
+      <input type="email" id="email" name="email" value={formData.email} onChange={changeHandler} />
+
+      <label htmlFor="password">Password:</label>
+      <input type="password" id="password" name="password" value={formData.password} onChange={changeHandler} />
+
+      <input type="submit" value="Submit" />
+    </form>
+  )
+}
+
+export default App
+
+
+
+output sample : {
+  data: [
+    { "id": "40ee", "name": "Kandregula Rohit Satya", "email": "rohitsatya4545@gmail.com", "password": "45" },
+    { "id": "9e7b", "name": "Kandregula Rohit Satya", "email": "test@gmail.com", "password": "67" }
+  ],
+  status: 200,
+  statusText: "OK",
+  headers: { /* header info */ },
+  config: { /* axios request config */ },
+  request: { /* low-level request info */ }
+}
+promises
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+
+const App = () => {
+  const [data, setData] = useState([])
+
+  // Fetch data on mount
+  useEffect(() => {
+    axios.get('http://localhost:3001/users')
+      .then((response) => {
+        setData(response.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error)
+      })
+  }, [])
+
+  // Delete handler
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:3001/users/${id}`)
+      .then(() => {
+        // Remove deleted user from UI without reloading
+        setData(data.filter(item => item.id !== id))
+      })
+      .catch((error) => {
+        console.error('Error deleting data:', error)
+      })
+  }
+
+  return (
+    <>
+      {data.map((item) => (
+        <div key={item.id}>
+          <h1>{item.name}</h1>
+          <p>{item.email}</p>
+          <p>{item.password}</p>
+          <button onClick={() => handleDelete(item.id)}>Delete</button>
+        </div>
+      ))}
+    </>
+  )
+}
+
+export default App
+
+
+using async await
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+
+const App = () => {
+  const [data, setData] = useState([])
+
+  // Fetch data on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/users')
+        // response.data is your users array
+        setData(response.data)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+    fetchData()
+  }, [])
+
+  // Delete handler
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/users/${id}`)
+      // Remove deleted user from UI immediately
+      setData(data.filter(item => item.id !== id))
+    } catch (error) {
+      console.error('Error deleting data:', error)
+    }
+  }
+
+  return (
+    <>
+      {data.map((item) => (
+        <div key={item.id}>
+          <h1>{item.name}</h1>
+          <p>{item.email}</p>
+          <p>{item.password}</p>
+          <button onClick={() => handleDelete(item.id)}>Delete</button>
+        </div>
+      ))}
+    </>
+  )
+}
+
+export default App
+
+
+Fastar
+
+import React,{useState} from "react"
+import { FaStar } from "react-icons/fa"
+const StarRating = () => {
+  const [rating, setRating] = useState(0)
+  const [hover, setHover] = useState(0)
+
+  return (
+    <>
+    {
+    [...Array(5)].map((_,index)=>{
+      let setCount=index+1;
+      return <FaStar 
+      key={index}
+      size={30}
+      color={setCount<=(hover||rating)?"#ffc107":"#e4e5e9"}
+      onClick={()=>setRating(setCount)}
+      onMouseEnter={()=>setHover(setCount)}
+      onMouseLeave={()=>setHover(0)}
+      style={{ cursor: "pointer", marginRight: 10 }}  />
+      
+    })
+  }
+    </>
+  )
+}
+export default StarRating;
+
+
+import React,{useState} from 'react'
+import { FaStar } from 'react-icons/fa'
+const StarRating=()=>{
+  const[rating,setRating]=useState(null);
+  const[hover,setHover]=useState(null);
+  let arr=new Array(5);
+  return(
+    <> 
+    {
+      arr.map((_,index)=>{
+        let starValue=index+1;
+        return <FaStar size={30}
+        key={index}
+        onClick={()=>setRating(starValue)}
+        onMouseEnter={() => setHover(starValue)}
+        onMouseLeave={() => setHover(null)}
+        color={}
+         />
+      }
+         
+      )
+    }
+    
+    </>
+  )
+}
+export default StarRating;

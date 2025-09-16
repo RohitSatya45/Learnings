@@ -1,0 +1,72 @@
+1.useRef to access dom element directly
+So yes 🎯 useRef = React’s way to get direct access to DOM elements.
+import React, { useRef } from 'react';
+
+const FocusInput = () => {
+  const inputRef = useRef(null); // create a ref
+
+  const handleFocus = () => {
+    inputRef.current.focus(); // focus the input when button is clicked
+  };
+
+  return (
+    <div>
+      <input ref={inputRef} type="text" placeholder="Type here..." />
+      <button onClick={handleFocus}>Focus the Input</button>
+    </div>
+  );
+};
+
+export default FocusInput;
+
+2. Storing values without causing re-renders
+import React, { useState, useRef } from 'react';
+
+const Timer = () => {
+  const [count, setCount] = useState(0); // state → UI updates
+  const countRef = useRef(0);            // ref → no UI update automatically
+
+  const increment = () => {
+    setCount(count + 1);          // updates UI
+    countRef.current += 1;        // changes ref (does NOT update UI)
+    console.log("Ref value:", countRef.current);
+  };
+
+  return (
+    <div>
+      <p>State Count (UI updates): {count}</p>
+      <p>Ref Count (no auto UI update): {countRef.current}</p>
+      <button onClick={increment}>Increase</button>
+    </div>
+  );
+};
+
+export default Timer;
+
+
+3. Storing previous values
+
+We can use useRef to track the previous value of state.import React, { useEffect, useRef, useState } from 'react'
+
+const PreviousValue = () => {
+  const [name, setName] = useState("")
+  const prevName = useRef("")  // ref to store old name
+
+  useEffect(() => {
+    prevName.current = name // update ref after render
+  }, [name])
+
+  return (
+    <div>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <p>Current: {name}</p>
+      <p>Previous: {prevName.current}</p>
+    </div>
+  )
+}
+
+export default PreviousValue
+
+
+
+
