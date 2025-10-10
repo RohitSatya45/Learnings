@@ -1,0 +1,78 @@
+GIT+GIT HUB
+GIt is a popular version control system(it tracks whole history).
+**git is free open source and scalable and used fror collobrative tasks.
+clear to clear terminal
+
+
+Git Commands.
+git config --list
+git config --global user.name "RohitSatya"
+git config --global user.email "rohitsatya45@gmail.com"
+git clone httppath; it clones all files in github to folder which we created.
+cd alpha (cd refers to change directory)--if we are are in aem code base folder and we want to go to 
+alpha folder we need to use this command.
+ls gives all files in our curent folder.
+ls -a /ls -Force in github shows hidden files and non hidden files..
+git status --it shows both your istance and remote are upto date.
+git status has four states
+1.untracked -newly created file in local.
+2.Modified-modified now in local.
+3.unmodified-no changes
+4.staged=added ready to commit.
+
+to steps to add changes we made in local 
+1.git add file name or git add . (if we have multiple files.
+2. git commit -m message
+3.git push origin master to push changes to master in github
+
+note1:cd.. to come out of current older.
+note 2: mkdir filename to create new folder.
+
+if we cretate new project on our local then we need to give git init to add it to git.
+git init
+git add .
+git commit -m message
+now new step to add this local code in to git.-->git remote add origin respository link.
+1.git remote add origin new repository link.
+2.git remote -v//gives the the new branch we created in github
+3.git branch //give master branch name.
+4.intialy master braanch is our default branch now github changed main branch to default branch.
+4.1 git branch -M main(it will change master name to main).
+5.git push -u origin master //if we give -u(upstream) from  we can give only git push
+
+*** working with branches.
+git branch//to check which branch we are in 
+git branch -M new name)to change branch name).
+git checkout branchname(branchname here is new branch we want to go to).
+git checkout -b newbranchname
+git branch -d branchname(we should go to other branch and delete this.)
+
+
+Note: if we want to check difference in our feature branch with repect to main we need to give
+git diff main.
+git merge branchname(main).
+git pull origin main(to get changes from github after pr merge).
+
+
+Merge conflicts : if we made changes in same code then it will occur during pr's.
+
+
+Note: for undoing changes.
+if we want to undo changes.(in case onlly changes added not committed).
+git reset filename.
+if multiple files
+git reset
+
+to revert to lasr commit
+git reset HEAD~1
+
+git log --> to check all our commits.
+
+git reset hash which we get fro  logs.
+
+git reset --hard hascode -- to remove changes locally from intelij
+
+
+
+
+
